@@ -1,0 +1,32 @@
+---
+plugins:
+  cachier: true
+virtualbox:
+  customize:
+    ioapic: "on"
+    memory: "512"
+    cpus: "1"
+    cpuexecutioncap: "50"
+machines:
+  default:
+    vm:
+      box: "precise64"
+      box_url: "http://files.vagrantup.com/precise64.box"
+      hostname: "vagrant.ninetails.com.br"
+      forwarded_port:
+        guest: 80
+        host: 8080
+      private_network:
+        ip: "192.168.2.2"
+      synced_folder:
+        - id: "vagrant-root"
+          host_directory: "../"
+          guest_directory: "/vagrant"
+          nfs: true
+    puppet:
+      - module_path: "puppet/modules"
+        manifests_path: "puppet/manifests"
+        manifest_file: "default.pp"
+        options: ["--verbose", "--debug", "--hiera_config /vagrant/vagrant/hiera.yaml"]
+        facter:
+          env: "dev"

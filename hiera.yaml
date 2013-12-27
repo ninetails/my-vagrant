@@ -1,0 +1,8 @@
+---
+:hierarchy:
+  - %{::env}
+  - common
+:backends:
+  - yaml
+:yaml:
+  :datadir: /vagrant/hieradata
