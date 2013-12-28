@@ -68,11 +68,11 @@ node 'default' {
       password => '123456',
       host     => 'localhost',
       grant    => ['all'],
-      charset  => 'utf8',
-      require  => File['/root/.my.cnf']
+      charset  => 'utf8'
     }
   })
-  create_resources(mysql::db, $mysql_db)
+
+  create_resources(mysql::db, $mysql_db, {require => File['/root/.my.cnf']})
 
   # sass
   package { 'sass':
