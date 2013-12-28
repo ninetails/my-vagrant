@@ -62,15 +62,17 @@ node 'default' {
     root_password => $mysql_root_password,
   }
 
-  $mysql_db_name = hiera('mysql_db_name', 'db')
-  mysql::db { $mysql_db_name:
-    user     => hiera('mysql_db_user', 'dev'),
-    password => hiera('mysql_db_pass', '123456'),
-    host     => hiera('mysql_db_host', 'localhost'),
-    grant    => hiera('mysql_db_grant', ['all']),
-    charset => 'utf8',
-    require => File['/root/.my.cnf'],
-  }
+  $mysql_db = hiera('mysql_db', {
+    'db' => {
+      user     => 'dev',
+      password => '123456',
+      host     => 'localhost',
+      grant    => ['all'],
+      charset  => 'utf8',
+      require  => File['/root/.my.cnf']
+    }
+  })
+  create_resources(mysql::db, $mysql_db)
 
   # sass
   package { 'sass':
