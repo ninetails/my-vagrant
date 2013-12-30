@@ -30,9 +30,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
           machine.vm.hostname = vmconf['vm']['hostname']
 
-          machine.vm.network :forwarded_port, guest: vmconf['vm']['forwarded_port']['guest'], host: vmconf['vm']['forwarded_port']['host']
           if vmconf['vm'].has_key?('private_network')
             machine.vm.network :private_network, ip: vmconf['vm']['private_network']['ip']
+          end
+
+          if vmconf['vm'].has_key?('forwarded_port') && (vmconf['vm']['forwarded_port'].respond_to? :each)
+            vmconf['vm']['forwarded_port'].each do |ports|
+              machine.vm.network :forwarded_port, guest: ports['guest'], host: ports['host']
+            end
           end
 
           if vmconf['vm'].has_key?('synced_folder') && (vmconf['vm']['synced_folder'].respond_to? :each)

@@ -14,8 +14,10 @@ machines:
       box_url: "http://files.vagrantup.com/precise64.box"
       hostname: "vagrant.ninetails.com.br"
       forwarded_port:
-        guest: 80
-        host: 8080
+        - guest: 80
+          host: 8080
+        - guest: 3306
+          host: 33066
       private_network:
         ip: "192.168.2.2"
       synced_folder:
