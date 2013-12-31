@@ -51,10 +51,14 @@ node 'default' {
     ],
   }
 
+  php::pear::channeldiscover { 'pear.phpdoc.org': }
+
   php::pear { 'phpqatools':
     command => "pear install --alldeps --force pear.phpqatools.org/phpqatools",
     timeout => 0,
   }
+
+  php::pear { 'phpdoc/phpDocumentor': }
 
   # mysql
   $mysql_root_password = hiera('mysql_root_pass', '123456')
