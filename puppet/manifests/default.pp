@@ -35,16 +35,16 @@ node 'default' {
   }
 
   $php_modules = hiera('php_modules', [
-    'cli',
     'curl',
     'dev',
     'gd',
     'intl',
     'mcrypt',
     'mysqlnd',
-    'tidy'
+    'tidy',
+    'xsl'
   ])
-  php::module {$php_modules:
+  php::module { $php_modules:
     notify => [
       Class['php::apache2::service'],
       Class['php::fpm::service']
@@ -58,7 +58,12 @@ node 'default' {
     timeout => 0,
   }
 
-  php::pear { 'phpdoc/phpDocumentor': }
+  php::pear { 'phpdoc/phpDocumentor':
+    require => [
+      Php::Pear::Channeldiscover['pear.phpdoc.org'],
+      Php::Module['xsl'],
+    ],
+  }
 
   # mysql
   $mysql_root_password = hiera('mysql_root_pass', '123456')
