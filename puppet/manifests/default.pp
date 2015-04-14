@@ -44,6 +44,7 @@ node 'default' {
     'tidy',
     'xsl'
   ])
+
   php::module { $php_modules:
     notify => [
       Class['php::apache2::service'],
@@ -96,10 +97,7 @@ node 'default' {
   }
 
   # coffeescript + yeoman
-  $npm_packages = hiera('npm_packages', [
-    'coffee-script',
-    'yo'
-  ])
+  $npm_packages = hiera('npm_packages', [])
   package { $npm_packages:
     ensure => present,
     provider => 'npm',

@@ -12,7 +12,9 @@ machines:
     vm:
       box: "precise64"
       box_url: "http://files.vagrantup.com/precise64.box"
-      hostname: "vagrant.ninetails.com.br"
+      hostname: "vagrant.dev"
+      hostsupdater:
+        aliases: ["www.vagrant.dev"]
       forwarded_port:
         - guest: 80
           host: 8080
